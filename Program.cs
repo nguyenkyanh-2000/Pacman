@@ -7,7 +7,7 @@ namespace Pacman
         static void Main()
         {
 
-            Window window = new Window("Pacman", ProgramConfig.ScreenWidth, ProgramConfig.ScreenWidth);
+            Window window = new Window("Pacman", ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight);
             SplashKit.LoadFont(ProgramConfig.GameFont, "PressStart2P-Regular.ttf");
             Game game = new Game();
 

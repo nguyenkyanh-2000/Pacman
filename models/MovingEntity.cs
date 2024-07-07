@@ -6,7 +6,7 @@ namespace Pacman;
 
 public abstract class MovingEntity: Entity
 {
-    protected Vector2 Velocity { get; set; }
+    public Vector2 Velocity { get; set; }
 
     protected MovingEntity(float x, float y, float size, Vector2 velocity, Sprite sprite)
         : base(x, y, size, sprite)

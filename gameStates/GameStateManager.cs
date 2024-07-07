@@ -19,12 +19,10 @@ public class GameStateManager
     private GameStateManager()
     {
         _gameStates = new Stack<GameState>();
-        
         MenuGameState = new MenuGameState(this);
         PlayGameState = new PlayGameState(this);
         PauseGameState = new PauseGameState(this);
         GameOverState = new GameOverState(this);
-        
         PushState(MenuGameState);
     }
     
@@ -37,6 +35,23 @@ public class GameStateManager
         return _instance;
     }
 
+    public GameState GetState(int state)
+    {
+        switch (state)
+        {
+            case MENU:
+                return MenuGameState;
+            case PLAYGAME:
+                return PlayGameState;
+            case PAUSE:
+                return PauseGameState;
+            case GAMEOVER:
+                return GameOverState;
+            default:
+                return MenuGameState;
+        }
+    }
+    
     public GameState CurrentState()
     {
         

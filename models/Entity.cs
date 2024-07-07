@@ -26,7 +26,6 @@ public abstract class Entity
         Sprite = sprite;
         Sprite.X = x;
         Sprite.Y = y;
-        // SplashKit.SpriteSetScale(Sprite, (size / Sprite.Width));
         Sprite.StartAnimation(0);
     }
 

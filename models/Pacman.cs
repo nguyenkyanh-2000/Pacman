@@ -3,15 +3,13 @@ using SplashKitSDK;
 using static Pacman.ProgramConfig;
 
 namespace Pacman;
-public class Pacman: MovingEntity
+public class Pacman: MovingEntity, ISubject
 {
     public CollisionDetector? CollisionDetector { set; get; }
+    public List<IObserver> MyObservers { get; set; } = []; 
     public Pacman(float x, float y, Sprite sprite)
         : base(x, y, ProgramConfig.MapCellSize, new Vector2(0, 0), sprite)
-    {
-        // sprite.X = x + sprite.Width / 2.0f;
-        // sprite.Y = y + sprite.Height / 2.0f;
-    }
+    {}
     
     public void HandleInput()
     {
@@ -47,11 +45,13 @@ public class Pacman: MovingEntity
             if (collidedEntity is Pellet)
             {
                 collidedEntity.Destroy();
+                NotifyObserversThatPelletEaten();
             }
             
-            if (collidedEntity is EnergizedPellet)
+            if (collidedEntity is PowerPellet)
             {
                 collidedEntity.Destroy();
+                NotifyObserversThatEnergizedPelletEaten();
             }
             
             if (collidedEntity is Wall)
@@ -63,5 +63,30 @@ public class Pacman: MovingEntity
         
 
         base.Update();
+    }
+
+    public void AttachObserver(IObserver observer)
+    {
+        MyObservers.Add(observer);
+    }
+
+    public void DetachObserver(IObserver observer)
+    {
+        MyObservers.Remove(observer);
+    }
+
+    public void NotifyObserversThatPelletEaten()
+    {
+       MyObservers.ForEach((observer) => observer.UpdateWhenPelletEaten());
+    }
+
+    public void NotifyObserversThatEnergizedPelletEaten()
+    {
+        MyObservers.ForEach((observer) => observer.UpdateWhenEnergizedPelletEaten());
+    }
+
+    public void NotifyObserversThatGhostCollided()
+    {
+         MyObservers.ForEach((observer) => observer.UpdateWhenGhostCollided());
     }
 }

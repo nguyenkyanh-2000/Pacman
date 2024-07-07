@@ -10,7 +10,6 @@ public class Wall: StaticEntity
 
     public override void Draw()
     {
-        // Fixed drawing size, but smaller collision box size of wall
-        SplashKit.FillRectangle(Color.Black, X, Y, ProgramConfig.MapCellSize, ProgramConfig.MapCellSize);
+        SplashKit.FillRectangle(Color.Blue, X, Y, ProgramConfig.MapCellSize, ProgramConfig.MapCellSize);
     }
 }

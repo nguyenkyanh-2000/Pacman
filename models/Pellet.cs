@@ -14,6 +14,6 @@ public class Pellet: StaticEntity
 
     public override void Draw()
     {
-        SplashKit.FillCircle(Color.Gray, X + ProgramConfig.MapCellSize/2.0f, Y + ProgramConfig.MapCellSize/2.0f, Size);
+        SplashKit.FillCircle(Color.Gray, X + ProgramConfig.MapCellSize/2.0f, Y + ProgramConfig.MapCellSize/2.0f, Size/5.0f);
     }
 }

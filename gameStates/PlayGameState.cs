@@ -1,11 +1,14 @@
 using SplashKitSDK;
 using static Pacman.ProgramConfig;
 namespace Pacman;
-public class PlayGameState : GameState
+public class PlayGameState : GameState, IObserver
 {
-    public List<Entity> Entities { get; } = new();
-    public List<Wall> Walls { get; } = new();
+    public List<Entity> Entities { get; } = [];
+    public List<Wall> Walls { get; } = [];
     private Pacman? _pacman;
+
+    public int Score { get; set; } = 0;
+    
     public PlayGameState(GameStateManager gameStateManager): base(gameStateManager)
     {
         
@@ -26,8 +29,7 @@ public class PlayGameState : GameState
             {
                 if (lines[i][j] == '#')
                 {
-                    // Create a wall. NOTE: Size is smaller than map cell size to allow for better pacman movement
-                    Wall wall = new Wall(j * MapCellSize, i * MapCellSize,  MapCellSize - 2);
+                    Wall wall = new Wall(j * MapCellSize, i * MapCellSize,  MapCellSize);
                     Entities.Add(wall);
                     Walls.Add(wall);
                 }
@@ -36,16 +38,17 @@ public class PlayGameState : GameState
                     _pacman = new Pacman(j * MapCellSize, i * MapCellSize, pacmanSprite);
                     Entities.Add(_pacman);
                     _pacman.CollisionDetector = new CollisionDetector(this);
+                    _pacman.AttachObserver(this);
                 }
                 if (lines[i][j] == '.')
                 {
-                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, 5);
+                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize);
                     Entities.Add(pellet);
                 }
-                if (lines[i][j] == 'E')
+                if (lines[i][j] == ';')
                 {
-                    EnergizedPellet energizedPellet = new EnergizedPellet(j * MapCellSize, i * MapCellSize, 7.5f);
-                    Entities.Add(energizedPellet);
+                    PowerPellet powerPellet = new PowerPellet(j * MapCellSize, i * MapCellSize, MapCellSize);
+                    Entities.Add(powerPellet);
                 }
             }
         }
@@ -53,7 +56,7 @@ public class PlayGameState : GameState
     
     public override void Initialize()
     {
-        SplashKit.FillRectangle(Color.White, 0,0, ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight); 
+        SplashKit.FillRectangle(Color.Black, 0,0, ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight); 
     }
 
     public override void Exit()
@@ -63,20 +66,14 @@ public class PlayGameState : GameState
 
     public override void Draw()
     {
-        SplashKit.ClearScreen(Color.White);
-        foreach (Entity entity in Entities)
-        {
-            entity.Draw();
-        }
+        SplashKit.ClearScreen(Color.Black);
+        Entities.ForEach(entity => entity.Draw());
         
     }
 
     public override void Update()
     {
-        foreach (Entity entity in Entities)
-        {
-            entity.Update();
-        }
+       Entities.ForEach(entity => entity.Update());
     }
 
     public override void HandleInput()
@@ -87,5 +84,22 @@ public class PlayGameState : GameState
         }
         
         _pacman?.HandleInput();
+    }
+
+    public void UpdateWhenPelletEaten()
+    {
+        Score += 10;
+        Console.WriteLine("Pellet eaten");
+    }
+
+    public void UpdateWhenEnergizedPelletEaten()
+    {
+        Score += 50;
+        Console.WriteLine("Energized pellet eaten");
+    }
+
+    public void UpdateWhenGhostCollided()
+    {
+        
     }
 }
