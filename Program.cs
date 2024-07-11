@@ -1,5 +1,4 @@
 ﻿using SplashKitSDK;
-
 namespace Pacman
 {
     public class Program
@@ -18,6 +17,7 @@ namespace Pacman
                 game.HandleInput();
                 game.Update();
                 game.Draw();
+                
                 
                 SplashKit.RefreshScreen(60);
             } while (!window.CloseRequested && game.IsRunning);

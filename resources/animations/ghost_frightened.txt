@@ -1,0 +1,7 @@
+SplashKit Animation
+
+//f: identifier, cell number, duration, next frame
+f:[0-1],[0-1],10,0
+
+//identifiers
+i:FrightenedGhostMove,0

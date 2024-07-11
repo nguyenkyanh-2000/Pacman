@@ -5,11 +5,20 @@ using static Pacman.ProgramConfig;
 namespace Pacman;
 public class Pacman: MovingEntity, ISubject
 {
+    // Loading the Sprite for Pacman
+    private static readonly Bitmap PacmanBitmap = SplashKit.LoadBitmap("Pacman", "pacman.png");
+    private static readonly AnimationScript PacmanMovingScript = new AnimationScript("PacmanMovingScript", "pacman.txt");
+    private static readonly Sprite PacmanSprite = new Sprite("PacmanSprite", PacmanBitmap, PacmanMovingScript);
+    
+    
     public CollisionDetector? CollisionDetector { set; get; }
-    public List<IObserver> MyObservers { get; set; } = []; 
-    public Pacman(float x, float y, Sprite sprite)
-        : base(x, y, ProgramConfig.MapCellSize, new Vector2(0, 0), sprite)
-    {}
+    public List<IObserver> MyObservers { get; set; } = [];
+
+    public Pacman(float x, float y)
+        : base(x, y, ProgramConfig.MapCellSize, new Vector2(0, 0), PacmanSprite)
+    {
+        PacmanBitmap.SetCellDetails(PacmanSprite.Width/16,PacmanSprite.Height, 16, 1, 16 );
+    }
     
     public void HandleInput()
     {

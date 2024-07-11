@@ -4,9 +4,11 @@ namespace Pacman;
 public class PlayGameState : GameState, IObserver
 {
     public List<Entity> Entities { get; } = [];
-    public List<Wall> Walls { get; } = [];
-    private Pacman? _pacman;
-
+    private List<Ghost> Ghosts { get; } = [];
+    private List<Wall> Walls { get; } = [];
+    public static Pacman Pacman = null!;
+    
+    
     public int Score { get; set; } = 0;
     
     public PlayGameState(GameStateManager gameStateManager): base(gameStateManager)
@@ -15,13 +17,8 @@ public class PlayGameState : GameState, IObserver
         // Reading the map from a file
         List<String> lines = File.ReadAllLines("resources/levels/level1.txt").ToList();
         
-        // Loading the pacman sprite
-        Bitmap pacmanBitmap = SplashKit.LoadBitmap("Pacman", "pacman.png");
-        AnimationScript pacmanMovingScript = new AnimationScript("PacmanMovingScript", "pacman.txt");
-        Sprite pacmanSprite = new Sprite("PacmanSprite", pacmanBitmap, pacmanMovingScript);
-        pacmanBitmap.SetCellDetails(pacmanSprite.Width/16,pacmanSprite.Height, 16, 1, 16 );
-        
         // Creating the entities
+        GhostFactory ghostFactory;
         
         for (int i = 0; i < lines.Count; i++)
         {
@@ -35,14 +32,14 @@ public class PlayGameState : GameState, IObserver
                 }
                 if (lines[i][j] == 'P')
                 {
-                    _pacman = new Pacman(j * MapCellSize, i * MapCellSize, pacmanSprite);
-                    Entities.Add(_pacman);
-                    _pacman.CollisionDetector = new CollisionDetector(this);
-                    _pacman.AttachObserver(this);
+                    Pacman = new Pacman(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(Pacman);
+                    Pacman.CollisionDetector = new CollisionDetector(this);
+                    Pacman.AttachObserver(this);
                 }
                 if (lines[i][j] == '.')
                 {
-                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize);
+                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize / 5.0f);
                     Entities.Add(pellet);
                 }
                 if (lines[i][j] == ';')
@@ -50,13 +47,48 @@ public class PlayGameState : GameState, IObserver
                     PowerPellet powerPellet = new PowerPellet(j * MapCellSize, i * MapCellSize, MapCellSize);
                     Entities.Add(powerPellet);
                 }
+                
+                if (lines[i][j] == 'b')
+                {
+                    ghostFactory = new BlinkyFactory();
+                    Ghost blinky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(blinky);
+                    Ghosts.Add(blinky);
+                }
+                
+                if (lines[i][j] == 'c')
+                {
+                    ghostFactory = new ClydeFactory();
+                    Ghost clyde = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(clyde);
+                    Ghosts.Add(clyde);
+                }
+                
+                if (lines[i][j] == 'p')
+                {
+                    ghostFactory = new PinkyFactory();
+                    Ghost pinky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(pinky);
+                    Ghosts.Add(pinky);
+                }
+                
+                if (lines[i][j] == 'i')
+                {
+                    ghostFactory = new InkyFactory();
+                    Ghost inky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(inky);
+                    Ghosts.Add(inky);
+                }
             }
         }
+        
+        // Setting the collision detector for the ghosts
+        Ghosts.ForEach(ghost => ghost.CollisionDetector = new CollisionDetector(this));
     }
     
     public override void Initialize()
     {
-        SplashKit.FillRectangle(Color.Black, 0,0, ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight); 
+        SplashKit.ClearScreen(Color.Black);
     }
 
     public override void Exit()
@@ -68,7 +100,6 @@ public class PlayGameState : GameState, IObserver
     {
         SplashKit.ClearScreen(Color.Black);
         Entities.ForEach(entity => entity.Draw());
-        
     }
 
     public override void Update()
@@ -83,19 +114,21 @@ public class PlayGameState : GameState, IObserver
             GameStateManager.ChangeStateInto(GameStateManager.PAUSE);
         }
         
-        _pacman?.HandleInput();
+        Pacman?.HandleInput();
     }
 
     public void UpdateWhenPelletEaten()
     {
         Score += 10;
-        Console.WriteLine("Pellet eaten");
     }
 
     public void UpdateWhenEnergizedPelletEaten()
     {
         Score += 50;
-        Console.WriteLine("Energized pellet eaten");
+        Ghosts.ForEach(ghost =>
+        {
+            ghost.ToFrightenedMode();
+        });
     }
 
     public void UpdateWhenGhostCollided()

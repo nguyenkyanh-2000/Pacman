@@ -8,7 +8,7 @@ public abstract class Entity
 {
     public float Size { get; }
     private PointF _position;
-    protected Sprite? Sprite { get; }
+    public Sprite? Sprite { get; set; }
     public bool IsDestroyed { get; private set; } = false;
 
     public Entity(float x, float y, float size)
@@ -33,7 +33,7 @@ public abstract class Entity
     {
         _position = new PointF(-9999, -9999);
         IsDestroyed = true;
-        if (Sprite != null) Sprite.Position = SplashKit.PointAt(-9999, -9999); // Sprite.SetPosition(-9999, -9999)
+        if (Sprite != null) SplashKit.FreeSprite(Sprite);
     }
 
     public virtual void Update()
@@ -75,4 +75,5 @@ public abstract class Entity
             if (Sprite != null) SplashKit.SpriteSetY(Sprite, value);
         }
     }
+    
 }

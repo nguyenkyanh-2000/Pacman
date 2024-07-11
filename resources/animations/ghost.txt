@@ -1,0 +1,13 @@
+SplashKit Animation
+
+//f: identifier, cell number, duration, next frame
+f:[0-1],[0-1],10,0
+f:[2-3],[2-3],10,2
+f:[4-5],[4-5],10,4
+f:[6-7],[6-7],10,6
+
+//identifiers
+i:GhostRight,0
+i:GhostLeft,2
+i:GhostUp,4
+i:GhostDown,6
