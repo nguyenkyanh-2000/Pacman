@@ -1,5 +1,4 @@
 using System.Numerics;
-using Pacman.ghostStrategies;
 using SplashKitSDK;
 
 namespace Pacman;
@@ -25,6 +24,7 @@ public class Ghost: MovingEntity
     public IGhostStrategy Strategy { get; set; } = null!;
     
     public CollisionDetector? CollisionDetector { set; get; }
+    
     
     public Ghost(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, sprite)
     

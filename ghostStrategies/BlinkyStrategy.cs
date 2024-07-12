@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace Pacman.ghostStrategies;
+namespace Pacman;
 
 public class BlinkyStrategy: IGhostStrategy
 {

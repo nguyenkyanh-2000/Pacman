@@ -8,4 +8,9 @@ public  class Utils
     {
         return (int) Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
     }
+    
+    public static int ManhattanDistanceBetween(Point a, Point b)
+    {
+        return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+    }
 }

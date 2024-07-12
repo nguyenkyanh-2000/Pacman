@@ -10,6 +10,6 @@ public static class ProgramConfig
     public const int ScreenHeight = 620;
     public const string GameFont = "PressStart2P";
     public const int MapCellSize = 20;
-    public const int PacmanSpeed = 2;
-    public const int GhostSpeed = 2;
+    public const int PacmanSpeed = 1;
+    public const int GhostSpeed = 1;
 }

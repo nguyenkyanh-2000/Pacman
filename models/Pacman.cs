@@ -68,6 +68,11 @@ public class Pacman: MovingEntity, ISubject
             {
                 Velocity *= this.CollisionTimeRatio(collidedEntity);
             }
+            
+            if (collidedEntity is Ghost)
+            {
+                NotifyObserversThatGhostCollided();
+            }
         }
         
         

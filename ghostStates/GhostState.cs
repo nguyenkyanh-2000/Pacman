@@ -23,29 +23,25 @@ public abstract class GhostState
     {
         return new Point(0, 0);
     }
-
-    // public virtual void ComputeNextMoveDirection()
-    // {
-    //     Point targetPosition = GetTargetPosition();
-    //     Point currentPosition = new Point(Ghost.X, Ghost.Y);
-    //
-    //     List<Point> paths  = Bfs.getPath( currentPosition,  targetPosition);
-    //     
-    //     if (paths.Count > 1)
-    //     {
-    //         Point nextPosition = paths[1];
-    //         Vector2 nextVelocity = new Vector2(nextPosition.X - currentPosition.X, nextPosition.Y - currentPosition.Y);
-    //         Ghost.Velocity = nextVelocity * ProgramConfig.GhostSpeed;
-    //     }
-    // }
+    
+    
+    /**
+     * Greedy algorithm to compute the next move direction of the ghost.
+     * This method is used to compute the next move direction of the ghost.
+     * The ghost will move in the direction that will get it closer to the target position.
+     * If the ghost is about to hit a wall, it will change direction.
+     * The ghost cannot move in the opposite direction of its current direction.
+     * Priority of direction: Up > Down > Left > Right
+     */
     
     public virtual void ComputeNextMoveDirection()
     {
+        
         Point targetPosition = GetTargetPosition();
         Point currentPosition = new Point(Ghost.X, Ghost.Y);
         
         Vector2 currentVelocity = Ghost.Velocity;
-        Vector2 nextVelocity = new Vector2(0, 0);
+        Vector2 nextVelocity = Ghost.Velocity;
     
         Vector2 currentDirection = Vector2.Normalize(currentVelocity);
         Vector2 oppositeDirection = new Vector2(-currentDirection.X, -currentDirection.Y);
@@ -53,17 +49,15 @@ public abstract class GhostState
         List<Vector2> possibleDirections = new List<Vector2>
         {
             new Vector2(0, -1),  // Up
-            new Vector2(-1, 0), // Left
             new Vector2(0, 1),  // Down
+            new Vector2(-1, 0), // Left
             new Vector2(1, 0),  // Right
            
         };
-        
-        List<Vector2> exitDirections = new List<Vector2>();
     
         // Find the direction that matches the oppositeDirection and remove it from the list
         possibleDirections.Remove(possibleDirections.Find(direction => direction.Equals(oppositeDirection)));
-        
+
         int minDistance = int.MaxValue;
         
         possibleDirections.ForEach((direction) =>
@@ -71,34 +65,24 @@ public abstract class GhostState
             // Check if a possible direction will hit a wall in the future
             Vector2 tempVelocity = direction * ProgramConfig.GhostSpeed;
             Ghost.Velocity = tempVelocity;
-            Entity? futureHitEntity = Ghost.CollisionDetector?.CollideWithWall(Ghost);
+            Wall? futureHitEntity = Ghost.CollisionDetector?.CollideWithWall(Ghost);
             Ghost.Velocity = currentVelocity;
-    
-            Console.WriteLine(Ghost + " will hit " + futureHitEntity?.GetType().Name + " if I go " + direction + " direction");
             
             if (futureHitEntity is not null)
             {
                 return;
             }
             
-            Console.WriteLine("Direction " + direction + " is possible");
             Point nextPosition = new Point(currentPosition.X + (int) tempVelocity.X, currentPosition.Y + (int) tempVelocity.Y);
             int distance = Utils.DistanceBetween(nextPosition, targetPosition);
     
-            if (distance <= minDistance)
+            if (minDistance > distance)
             {
                 minDistance = distance;
                 nextVelocity = tempVelocity;
             }
-            
-            exitDirections.Add(direction);
         });
         
         Ghost.Velocity = nextVelocity;
-        
-        if (exitDirections.Count == 0)
-        {
-            Ghost.Velocity = oppositeDirection * ProgramConfig.GhostSpeed;
-        }
     }
 }

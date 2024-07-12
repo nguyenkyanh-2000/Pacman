@@ -1,5 +1,4 @@
 using System.Numerics;
-using Pacman.ghostStrategies;
 using SplashKitSDK;
 
 namespace Pacman;

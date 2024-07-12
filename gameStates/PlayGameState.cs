@@ -11,6 +11,8 @@ public class PlayGameState : GameState, IObserver
     public List<Wall> Walls { get; } = [];
     
     public static Pacman Pacman = null!;
+    public static Ghost Blinky = null!;
+    public static Ghost Clyde = null!;
     
     
     public int Score { get; set; } = 0;
@@ -30,7 +32,6 @@ public class PlayGameState : GameState, IObserver
             {
                 if (lines[i][j] == '#')
                 {
-                    // Wall size is smaller to help with the movement
                     Wall wall = new Wall(j * MapCellSize, i * MapCellSize,  MapCellSize);
                     Entities.Add(wall);
                     Walls.Add(wall);
@@ -42,6 +43,7 @@ public class PlayGameState : GameState, IObserver
                     Pacman.CollisionDetector = new CollisionDetector(this);
                     Pacman.AttachObserver(this);
                 }
+                // Fill all empty spaces on the map with pellets
                 if (lines[i][j] == ' ')
                 {
                     Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize / 5);
@@ -56,17 +58,17 @@ public class PlayGameState : GameState, IObserver
                 if (lines[i][j] == 'b')
                 {
                     ghostFactory = new BlinkyFactory();
-                    Ghost blinky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
-                    Entities.Add(blinky);
-                    Ghosts.Add(blinky);
+                    Blinky= ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(Blinky);
+                    Ghosts.Add(Blinky);
                 }
                 
                 if (lines[i][j] == 'c')
                 {
                     ghostFactory = new ClydeFactory();
-                    Ghost clyde = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
-                    Entities.Add(clyde);
-                    Ghosts.Add(clyde);
+                    Clyde = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Entities.Add(Clyde);
+                    Ghosts.Add(Clyde);
                 }
                 
                 if (lines[i][j] == 'p')
@@ -138,6 +140,6 @@ public class PlayGameState : GameState, IObserver
 
     public void UpdateWhenGhostCollided()
     {
-        
+        GameStateManager.ChangeStateInto(GameStateManager.GAMEOVER);
     }
 }

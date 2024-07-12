@@ -33,9 +33,6 @@ public class CollisionDetector
     public Wall? CollideWithWall(MovingEntity entity)
     {
         RectangleF entityFutureCollisionBox = entity.GetSweptBroadPhaseBox();
-
-        // Vector2 entityVelocityDirection = Vector2.Normalize(entity.Velocity);
-        // entityFutureCollisionBox.Offset(new PointF(entityVelocityDirection * entity.Size));
         
         foreach (Wall wall in _playGameState.Walls)
         {
@@ -47,5 +44,4 @@ public class CollisionDetector
 
         return null;
     }
-    
 }
