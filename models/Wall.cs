@@ -4,7 +4,7 @@ namespace Pacman;
 
 public class Wall: StaticEntity
 {
-    public Wall(float x, float y, float size) : base(x, y, size)
+    public Wall(int x, int y, int size) : base(x, y, size)
     {
     }
 

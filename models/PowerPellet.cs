@@ -4,11 +4,11 @@ namespace Pacman;
 
 public class PowerPellet: StaticEntity
 {
-    public PowerPellet(float x, float y, float size) : base(x, y, size)
+    public PowerPellet(int x, int y, int size) : base(x, y, size)
     {
     }
 
-    public PowerPellet(float x, float y, float size, Sprite sprite) : base(x, y, size, sprite)
+    public PowerPellet(int x, int y, int size, Sprite sprite) : base(x, y, size, sprite)
     {
     }
     

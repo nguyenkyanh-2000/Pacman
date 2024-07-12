@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Numerics;
 
 namespace Pacman;
 
@@ -24,6 +25,23 @@ public class CollisionDetector
             if (entityFutureCollisionBox.IntersectsWith(other.CollisionBox()))
             {
                 return other;
+            }
+        }
+
+        return null;
+    }
+    public Wall? CollideWithWall(MovingEntity entity)
+    {
+        RectangleF entityFutureCollisionBox = entity.GetSweptBroadPhaseBox();
+
+        // Vector2 entityVelocityDirection = Vector2.Normalize(entity.Velocity);
+        // entityFutureCollisionBox.Offset(new PointF(entityVelocityDirection * entity.Size));
+        
+        foreach (Wall wall in _playGameState.Walls)
+        {
+            if (entityFutureCollisionBox.IntersectsWith(wall.CollisionBox()))
+            {
+                return wall;
             }
         }
 

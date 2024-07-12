@@ -6,19 +6,19 @@ namespace Pacman;
 
 public abstract class Entity
 {
-    public float Size { get; }
-    private PointF _position;
+    public int Size { get; }
+    private Point _position;
     public Sprite? Sprite { get; set; }
     public bool IsDestroyed { get; private set; } = false;
 
-    public Entity(float x, float y, float size)
+    public Entity(int x, int y, int size)
     {
         _position.X = x;
         _position.Y = y;
         Size = size;
     }
     
-    public Entity(float x, float y, float size, Sprite sprite)
+    public Entity(int x, int y, int size, Sprite sprite)
     {
         _position.X = x;
         _position.Y = y;
@@ -31,7 +31,7 @@ public abstract class Entity
 
     public void Destroy()
     {
-        _position = new PointF(-9999, -9999);
+        _position = new Point(-9999, -9999);
         IsDestroyed = true;
         if (Sprite != null) SplashKit.FreeSprite(Sprite);
     }
@@ -56,7 +56,7 @@ public abstract class Entity
         return CollisionBox().IntersectsWith(other.CollisionBox());
     }
 
-    public float X
+    public int X
     {
         get => _position.X;
         set
@@ -66,7 +66,7 @@ public abstract class Entity
         }
     }
 
-    public float Y
+    public int Y
     {
         get => _position.Y;
         set

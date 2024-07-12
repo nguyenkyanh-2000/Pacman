@@ -11,7 +11,7 @@ public class Clyde: Ghost
     public static readonly Sprite ClydeSprite = new Sprite("ClydeSprite", ClydeBitmap, ClydeMovingScript);
    
     
-    public Clyde(float x, float y, float size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, ClydeSprite)
+    public Clyde(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, ClydeSprite)
     {
         ClydeBitmap.SetCellDetails(ClydeSprite.Width/8, ClydeSprite.Height, 8, 1, 8 );
         Strategy = new BlinkyStrategy();

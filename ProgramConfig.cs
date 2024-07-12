@@ -6,10 +6,10 @@ namespace Pacman;
 */
 public static class ProgramConfig
 {
-    public const int ScreenWidth = 840;
-    public const int ScreenHeight = 930;
+    public const int ScreenWidth = 560;
+    public const int ScreenHeight = 620;
     public const string GameFont = "PressStart2P";
-    public const int MapCellSize = 15;
+    public const int MapCellSize = 20;
     public const int PacmanSpeed = 2;
     public const int GhostSpeed = 2;
 }

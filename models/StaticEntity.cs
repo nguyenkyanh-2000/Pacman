@@ -5,11 +5,11 @@ namespace Pacman;
 public class StaticEntity: Entity
 {
     
-    public StaticEntity(float x, float y, float size) : base(x, y, size)
+    public StaticEntity(int x, int y, int size) : base(x, y, size)
     {
     }
     
-    public StaticEntity(float x, float y, float size, Sprite sprite) : base(x, y, size, sprite)
+    public StaticEntity(int x, int y, int size, Sprite sprite) : base(x, y, size, sprite)
     {
     }
     

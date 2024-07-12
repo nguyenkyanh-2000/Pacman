@@ -21,7 +21,7 @@ public class ChaseMode: GhostState
     
     
     // In this state, the target position depends on the ghost's strategy (type)
-    public override PointF GetTargetPosition()
+    public override Point GetTargetPosition()
     {
         return this.Ghost.Strategy.GetChaseTargetPosition();
     }

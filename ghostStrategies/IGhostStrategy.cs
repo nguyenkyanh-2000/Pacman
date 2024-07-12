@@ -4,6 +4,6 @@ namespace Pacman.ghostStrategies;
 
 public interface IGhostStrategy
 {
-    public PointF GetChaseTargetPosition();
-    public PointF GetScatterTargetPosition();
+    public Point GetChaseTargetPosition();
+    public Point GetScatterTargetPosition();
 }

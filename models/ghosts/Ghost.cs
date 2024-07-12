@@ -26,7 +26,7 @@ public class Ghost: MovingEntity
     
     public CollisionDetector? CollisionDetector { set; get; }
     
-    public Ghost(float x, float y, float size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, sprite)
+    public Ghost(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, sprite)
     
     {
         ChaseMode = new ChaseMode(this);
@@ -35,7 +35,7 @@ public class Ghost: MovingEntity
         EatenMode = new EatenMode(this);
         ScatterMode = new ScatterMode(this);
         
-        State = HouseMode;
+        State = ChaseMode;
         
         OriginalSprite = sprite;
     }

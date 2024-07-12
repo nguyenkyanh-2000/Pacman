@@ -4,11 +4,11 @@ namespace Pacman;
 
 public class Pellet: StaticEntity
 {
-    public Pellet(float x, float y, float size) : base(x, y, size)
+    public Pellet(int x, int y, int size) : base(x, y, size)
     {
     }
 
-    public Pellet(float x, float y, float size, Sprite sprite) : base(x, y, size, sprite)
+    public Pellet(int x, int y, int size, Sprite sprite) : base(x, y, size, sprite)
     {
     }
 

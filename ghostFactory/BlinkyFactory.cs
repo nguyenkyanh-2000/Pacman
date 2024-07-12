@@ -6,6 +6,7 @@ public class BlinkyFactory: GhostFactory
 {
     public override Ghost CreateGhost(int x, int y)
     {
-        return new Blinky(x, y, ProgramConfig.MapCellSize, new Vector2(0, 0), Blinky.BlinkySprite);
+        // Blinky is smaller to help with the movement
+        return new Blinky(x, y, ProgramConfig.MapCellSize - 2, new Vector2(0, 0), Blinky.BlinkySprite);
     }
 }

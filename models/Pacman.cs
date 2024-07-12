@@ -14,8 +14,9 @@ public class Pacman: MovingEntity, ISubject
     public CollisionDetector? CollisionDetector { set; get; }
     public List<IObserver> MyObservers { get; set; } = [];
 
-    public Pacman(float x, float y)
-        : base(x, y, ProgramConfig.MapCellSize, new Vector2(0, 0), PacmanSprite)
+    public Pacman(int x, int y)
+         // Pacman is smaller to help with the movement
+        : base(x, y, ProgramConfig.MapCellSize - 2, new Vector2(0, 0), PacmanSprite)
     {
         PacmanBitmap.SetCellDetails(PacmanSprite.Width/16,PacmanSprite.Height, 16, 1, 16 );
     }

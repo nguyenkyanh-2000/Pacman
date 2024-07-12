@@ -1,11 +1,15 @@
+using System.Drawing;
 using SplashKitSDK;
 using static Pacman.ProgramConfig;
+using Color = SplashKitSDK.Color;
+
 namespace Pacman;
 public class PlayGameState : GameState, IObserver
 {
     public List<Entity> Entities { get; } = [];
     private List<Ghost> Ghosts { get; } = [];
-    private List<Wall> Walls { get; } = [];
+    public List<Wall> Walls { get; } = [];
+    
     public static Pacman Pacman = null!;
     
     
@@ -15,7 +19,7 @@ public class PlayGameState : GameState, IObserver
     {
         
         // Reading the map from a file
-        List<String> lines = File.ReadAllLines("resources/levels/level1.txt").ToList();
+        List<String> lines = File.ReadAllLines("resources/levels/level.txt").ToList();
         
         // Creating the entities
         GhostFactory ghostFactory;
@@ -26,6 +30,7 @@ public class PlayGameState : GameState, IObserver
             {
                 if (lines[i][j] == '#')
                 {
+                    // Wall size is smaller to help with the movement
                     Wall wall = new Wall(j * MapCellSize, i * MapCellSize,  MapCellSize);
                     Entities.Add(wall);
                     Walls.Add(wall);
@@ -37,9 +42,9 @@ public class PlayGameState : GameState, IObserver
                     Pacman.CollisionDetector = new CollisionDetector(this);
                     Pacman.AttachObserver(this);
                 }
-                if (lines[i][j] == '.')
+                if (lines[i][j] == ' ')
                 {
-                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize / 5.0f);
+                    Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize / 5);
                     Entities.Add(pellet);
                 }
                 if (lines[i][j] == ';')

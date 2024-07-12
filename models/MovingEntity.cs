@@ -8,13 +8,13 @@ public abstract class MovingEntity: Entity
 {
     public Vector2 Velocity { get; set; }
 
-    protected MovingEntity(float x, float y, float size, Vector2 velocity, Sprite sprite)
+    protected MovingEntity(int x, int y, int size, Vector2 velocity, Sprite sprite)
         : base(x, y, size, sprite)
     {
         Velocity = velocity;
     }
     
-    protected MovingEntity(float x, float y, float size, Vector2 velocity) 
+    protected MovingEntity(int x, int y, int size, Vector2 velocity) 
         : base(x, y, size)
     {
         Velocity = velocity;
@@ -23,8 +23,8 @@ public abstract class MovingEntity: Entity
     public void Move()
     {
       if (Velocity.Length() == 0) return;
-      this.X += Velocity.X;
-      this.Y += Velocity.Y;
+      this.X += (int) Velocity.X;
+      this.Y += (int) Velocity.Y;
     }
     
     public override void Update()
@@ -36,10 +36,10 @@ public abstract class MovingEntity: Entity
     // Get Swept Broad-phase AABB Rectangle
     public RectangleF GetSweptBroadPhaseBox()
     {
-        float x = Velocity.X > 0 ? X : X + Velocity.X;
-        float y = Velocity.Y > 0 ? Y : Y + Velocity.Y;
-        float w = Velocity.X > 0 ? Velocity.X + Size : Size - Velocity.X;
-        float h = Velocity.Y > 0 ? Velocity.Y + Size : Size - Velocity.Y;
+        int x = Velocity.X > 0 ? X : X + (int) Velocity.X;
+        int y = Velocity.Y > 0 ? Y : Y + (int) Velocity.Y;
+        int w = Velocity.X > 0 ? (int) Velocity.X + Size : Size - (int) Velocity.X;
+        int h = Velocity.Y > 0 ? (int) Velocity.Y + Size : Size - (int) Velocity.Y;
         return new RectangleF(x, y, w, h);
     }
     
@@ -51,14 +51,14 @@ public abstract class MovingEntity: Entity
         // Bottom: Distance between the bottom of the moving entity and the top of the other entity
         // Left: Distance between the left of the moving entity and the right of the other entity
         // Right: Distance between the right of the moving entity and the left of the other entity
-        float left = other.X - (this.X + this.Size);
-        float right = (other.X + other.Size) - this.X;
-        float top = other.Y - (this.Y + this.Size);
-        float bottom = (other.Y + other.Size) - this.Y;
+        int left = other.X - (this.X + this.Size);
+        int right = (other.X + other.Size) - this.X;
+        int top = other.Y - (this.Y + this.Size);
+        int bottom = (other.Y + other.Size) - this.Y;
 
 
-        float dxEntry, dyEntry;
-        float dxExit, dyExit;
+        int dxEntry, dyEntry;
+        int dxExit, dyExit;
 
         // Calculate the distance between corresponding edges of the two entities
         if (this.Velocity.X > 0)

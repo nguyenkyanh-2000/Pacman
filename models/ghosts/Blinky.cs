@@ -11,7 +11,7 @@ public class Blinky: Ghost
     public static readonly Sprite BlinkySprite = new Sprite("BlinkySprite", BlinkyBitmap, BlinkyMovingScript);
    
     
-    public Blinky(float x, float y, float size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, BlinkySprite)
+    public Blinky(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, BlinkySprite)
     {
         BlinkyBitmap.SetCellDetails(BlinkySprite.Width/8, BlinkySprite.Height, 8, 1, 8 );
         Strategy = new BlinkyStrategy();
