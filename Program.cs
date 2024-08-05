@@ -8,7 +8,7 @@ namespace Pacman
 
             Window window = new Window("Pacman", ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight);
             SplashKit.LoadFont(ProgramConfig.GameFont, "PressStart2P-Regular.ttf");
-            Game game = new Game();
+            Game game = Game.Instance;
 
             do
             {
@@ -20,7 +20,7 @@ namespace Pacman
                 
                 
                 SplashKit.RefreshScreen(60);
-            } while (!window.CloseRequested && game.IsRunning);
+            } while (!window.CloseRequested);
         }
     }
 }

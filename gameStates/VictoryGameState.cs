@@ -2,9 +2,9 @@ using SplashKitSDK;
 
 namespace Pacman;
 
-public class GameOverState: GameState
+public class VictoryGameState: GameState
 {
-    public GameOverState(GameStateManager gameStateManager): base(gameStateManager) 
+    public VictoryGameState(GameStateManager gameStateManager): base(gameStateManager) 
     {
     }
 
@@ -12,7 +12,7 @@ public class GameOverState: GameState
     {
         SplashKit.FillRectangle(Color.Black, 0, 0, ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight);
         
-        SplashKit.DrawText("GAMEOVER", Color.OrangeRed, ProgramConfig.GameFont, 50, 100, 100);
+        SplashKit.DrawText("VICTORY", Color.Green, ProgramConfig.GameFont, 50, 100, 100);
         
         PlayGameState playGameState = (PlayGameState) GameStateManager.GetState(GameStateManager.PLAYGAME);
         int score = playGameState.Score;

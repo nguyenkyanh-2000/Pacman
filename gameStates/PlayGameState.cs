@@ -10,12 +10,14 @@ public class PlayGameState : GameState, IObserver
     private List<Ghost> Ghosts { get; } = [];
     public List<Wall> Walls { get; } = [];
     
+    public List<Pellet> Pellets { get; } = [];
+    
     public static Pacman Pacman = null!;
     public static Ghost Blinky = null!;
     public static Ghost Clyde = null!;
     
     
-    public int Score { get; set; } = 0;
+    public int Score { get; private set; } = 0;
     
     public PlayGameState(GameStateManager gameStateManager): base(gameStateManager)
     {
@@ -48,17 +50,20 @@ public class PlayGameState : GameState, IObserver
                 {
                     Pellet pellet = new Pellet(j * MapCellSize, i * MapCellSize, MapCellSize / 5);
                     Entities.Add(pellet);
+                    Pellets.Add(pellet);
                 }
                 if (lines[i][j] == ';')
                 {
                     PowerPellet powerPellet = new PowerPellet(j * MapCellSize, i * MapCellSize, MapCellSize);
                     Entities.Add(powerPellet);
+                    Pellets.Add(powerPellet);
                 }
                 
                 if (lines[i][j] == 'b')
                 {
                     ghostFactory = new BlinkyFactory();
-                    Blinky= ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Blinky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Blinky.RestingPosition = new Point(i, j);
                     Entities.Add(Blinky);
                     Ghosts.Add(Blinky);
                 }
@@ -67,6 +72,7 @@ public class PlayGameState : GameState, IObserver
                 {
                     ghostFactory = new ClydeFactory();
                     Clyde = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    Clyde.RestingPosition = new Point(i, j);
                     Entities.Add(Clyde);
                     Ghosts.Add(Clyde);
                 }
@@ -75,6 +81,7 @@ public class PlayGameState : GameState, IObserver
                 {
                     ghostFactory = new PinkyFactory();
                     Ghost pinky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    pinky.RestingPosition = new Point(i, j);
                     Entities.Add(pinky);
                     Ghosts.Add(pinky);
                 }
@@ -83,6 +90,7 @@ public class PlayGameState : GameState, IObserver
                 {
                     ghostFactory = new InkyFactory();
                     Ghost inky = ghostFactory.CreateGhost(j * MapCellSize, i * MapCellSize);
+                    inky.RestingPosition = new Point(i, j);
                     Entities.Add(inky);
                     Ghosts.Add(inky);
                 }
@@ -112,6 +120,12 @@ public class PlayGameState : GameState, IObserver
     public override void Update()
     {
        Entities.ForEach(entity => entity.Update());
+       if (Pellets.Count == 0)
+       {
+           Score += 2000;
+           GameStateManager.ChangeStateInto(GameStateManager.VICTORY);
+       }
+       
     }
 
     public override void HandleInput()
@@ -124,22 +138,37 @@ public class PlayGameState : GameState, IObserver
         Pacman?.HandleInput();
     }
 
-    public void UpdateWhenPelletEaten()
+    public void UpdateWhenPelletEaten(Pellet pellet)
     {
+        pellet.Destroy();
+        Pellets.Remove(pellet);
         Score += 10;
     }
 
-    public void UpdateWhenEnergizedPelletEaten()
+    public void UpdateWhenPowerPelletEaten(PowerPellet powerPellet)
     {
+        powerPellet.Destroy();
+        Pellets.Remove(powerPellet);
         Score += 50;
         Ghosts.ForEach(ghost =>
         {
-            ghost.ToFrightenedMode();
+            ghost.State.PowerPelletEaten();
         });
     }
 
-    public void UpdateWhenGhostCollided()
+    public void UpdateWhenGhostCollided(Ghost ghost)
     {
-        GameStateManager.ChangeStateInto(GameStateManager.GAMEOVER);
+
+        if (ghost.State is FrightenedMode)
+        {
+            ghost.State.Eaten();
+            Score += 200;
+            return;
+        }
+        
+        if (ghost.State is ChaseMode || ghost.State is ScatterMode)
+        {
+            GameStateManager.ChangeStateInto(GameStateManager.GAMEOVER);
+        }
     }
 }

@@ -1,27 +1,53 @@
+using SplashKitSDK;
+
 namespace Pacman;
 
 public class Game
 {
-    public bool IsRunning { get; set; } = true;
-    private GameStateManager _gameStateManager;
+    private static Game? _instance;
+    public static bool IsOver { get; set; } = false;
+    public GameStateManager GameStateManager;
     
-    public Game()
+    private Game()
     {
-        _gameStateManager = GameStateManager.Instance();
+        GameStateManager = new GameStateManager();
+        GameStateManager.PushState(GameStateManager.GetState(GameStateManager.MENU));
+    }
+    
+    public static Game Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new Game();
+            }
+            return _instance;
+        }
     }
 
     public void Draw()
     {
-        _gameStateManager.Draw();
+        GameStateManager.Draw();
     }
 
     public void Update()
     {
-        _gameStateManager.Update();
+        GameStateManager.Update();
     }
 
     public void HandleInput()
     {
-        _gameStateManager.HandleInput();
+        if (IsOver)
+        {
+            if (SplashKit.KeyDown(KeyCode.RKey))
+            {
+                GameStateManager = new GameStateManager();
+                GameStateManager.PushState(GameStateManager.GetState(GameStateManager.MENU));
+                IsOver = false;
+            }
+        } 
+        
+        GameStateManager.HandleInput();
     }
 }

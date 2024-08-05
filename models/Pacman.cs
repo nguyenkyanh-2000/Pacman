@@ -18,7 +18,7 @@ public class Pacman: MovingEntity, ISubject
          // Pacman is smaller to help with the movement
         : base(x, y, ProgramConfig.MapCellSize - 2, new Vector2(0, 0), PacmanSprite)
     {
-        PacmanBitmap.SetCellDetails(PacmanSprite.Width/16,PacmanSprite.Height, 16, 1, 16 );
+        PacmanBitmap.SetCellDetails(MapCellSize,MapCellSize, 16, 1, 16 );
     }
     
     public void HandleInput()
@@ -48,33 +48,30 @@ public class Pacman: MovingEntity, ISubject
     
     public override void Update()
     {
-        Entity? collidedEntity = CollisionDetector?.CollidedWith(this);
-
-        if (collidedEntity != null)
-        {
-            if (collidedEntity is Pellet)
-            {
-                collidedEntity.Destroy();
-                NotifyObserversThatPelletEaten();
-            }
-            
-            if (collidedEntity is PowerPellet)
-            {
-                collidedEntity.Destroy();
-                NotifyObserversThatEnergizedPelletEaten();
-            }
-            
-            if (collidedEntity is Wall)
-            {
-                Velocity *= this.CollisionTimeRatio(collidedEntity);
-            }
-            
-            if (collidedEntity is Ghost)
-            {
-                NotifyObserversThatGhostCollided();
-            }
-        }
+        List<Entity> collidedEntities = CollisionDetector?.CollidedWith(this) ?? [];
         
+        collidedEntities.ForEach((entity) =>
+        {
+            if (entity is Pellet pellet)
+            {
+                NotifyObserversThatPelletEaten(pellet);
+            }
+            
+            if (entity is PowerPellet powerPellet)
+            {
+                NotifyObserversThatPowerPelletEaten(powerPellet);
+            }
+            
+            if (entity is Wall)
+            {
+                Velocity *= this.CollisionTimeRatio(entity);
+            }
+            
+            if (entity is Ghost ghost)
+            {
+                NotifyObserversThatGhostCollided(ghost);
+            }
+        });
         
 
         base.Update();
@@ -90,18 +87,18 @@ public class Pacman: MovingEntity, ISubject
         MyObservers.Remove(observer);
     }
 
-    public void NotifyObserversThatPelletEaten()
+    public void NotifyObserversThatPelletEaten(Pellet pellet)
     {
-       MyObservers.ForEach((observer) => observer.UpdateWhenPelletEaten());
+       MyObservers.ForEach((observer) => observer.UpdateWhenPelletEaten(pellet));
     }
 
-    public void NotifyObserversThatEnergizedPelletEaten()
+    public void NotifyObserversThatPowerPelletEaten(PowerPellet powerPellet)
     {
-        MyObservers.ForEach((observer) => observer.UpdateWhenEnergizedPelletEaten());
+        MyObservers.ForEach((observer) => observer.UpdateWhenPowerPelletEaten(powerPellet));
     }
 
-    public void NotifyObserversThatGhostCollided()
+    public void NotifyObserversThatGhostCollided(Ghost ghost)
     {
-         MyObservers.ForEach((observer) => observer.UpdateWhenGhostCollided());
+         MyObservers.ForEach((observer) => observer.UpdateWhenGhostCollided(ghost));
     }
 }

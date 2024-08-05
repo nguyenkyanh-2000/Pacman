@@ -12,7 +12,7 @@ public class Blinky: Ghost
     
     public Blinky(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, BlinkySprite)
     {
-        BlinkyBitmap.SetCellDetails(BlinkySprite.Width/8, BlinkySprite.Height, 8, 1, 8 );
+        BlinkyBitmap.SetCellDetails(ProgramConfig.MapCellSize, ProgramConfig.MapCellSize, 8, 1, 8 );
         Strategy = new BlinkyStrategy();
     }
 }

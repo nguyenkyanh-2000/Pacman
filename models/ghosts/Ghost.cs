@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Numerics;
 using SplashKitSDK;
 
@@ -6,18 +7,17 @@ namespace Pacman;
 public class Ghost: MovingEntity
 {
     
-    
-    private GhostState State { get; set; }
+    public Point RestingPosition { get; set; }
+    public GhostState State { get; private set; }
     private Sprite OriginalSprite { get; set; }
     private Sprite FrightenedSprite { get; set; } = null!;
     
     protected readonly GhostState ChaseMode; 
     protected readonly GhostState FrightenedMode;
-    protected readonly GhostState HouseMode;
     protected readonly GhostState EatenMode;
     protected readonly GhostState ScatterMode;
 
-    protected int ModeTimer { get; set; } = 0;
+    protected int ScatterTimer { get; set; } = 0;
     protected int FrightenedTimer { get; set; } = 0;
     protected bool IsChasing { get; set; } = true;
 
@@ -31,12 +31,10 @@ public class Ghost: MovingEntity
     {
         ChaseMode = new ChaseMode(this);
         FrightenedMode = new FrightenedMode(this);
-        HouseMode = new HouseMode(this);
         EatenMode = new EatenMode(this);
         ScatterMode = new ScatterMode(this);
         
         State = ChaseMode;
-        
         OriginalSprite = sprite;
     }
 
@@ -64,6 +62,39 @@ public class Ghost: MovingEntity
             {
                 State.TimerFrightenedOver();
             }
+        }
+        
+        // If the ghost is in eaten mode, update the animation and change the state to chase mode when the ghost reaches
+        // the resting position
+        if (State == EatenMode)
+        {
+            // Moving animation for the ghost
+            if (Velocity.X > 0)
+            {
+                Sprite?.StartAnimation("EatenGhostRight");
+            }
+        
+            if (Velocity.X < 0)
+            {
+                Sprite?.StartAnimation("EatenGhostLeft");
+            }
+        
+            if (Velocity.Y > 0)
+            {
+                Sprite?.StartAnimation("EatenGhostDown");
+            }
+        
+            if (Velocity.Y < 0)
+            {
+                Sprite?.StartAnimation("EatenGhostUp");
+            }
+            
+            Entity restingPosition = new StaticEntity(RestingPosition.X, RestingPosition.Y, 20);
+            if (this.IntersectsWith(restingPosition))
+            {
+                ToChaseMode();
+            }
+            
         }
 
         State.ComputeNextMoveDirection();
@@ -98,19 +129,27 @@ public class Ghost: MovingEntity
         Sprite = FrightenedSprite;
         Sprite.StartAnimation(0);
         
+        // Reverse the direction of the ghost. The ghost will move at 0.8 times the speed
+        Velocity = -Velocity;
+        
         // Set the state to frightened mode
         State = FrightenedMode;
         FrightenedTimer = 0;
-    }
-
-    public void ToHouseMode()
-    {
-        State = HouseMode;
     }
     
     public void ToEatenMode()
     {
         State = EatenMode;
+        
+        // Load the eaten ghost sprite based on the bitmap and animation script
+        AnimationScript eatenGhostMovingScript =
+            new AnimationScript("EatenGhostMovingScript", "ghost_eaten.txt");
+        Bitmap eatenGhostBitmap = SplashKit.LoadBitmap("EatenGhost", "ghost_eaten.png");
+        Sprite eatenGhostSprite =
+            new Sprite("EatenGhostSprite", eatenGhostBitmap, eatenGhostMovingScript);
+        eatenGhostBitmap.SetCellDetails(20, eatenGhostSprite.Height, 4, 1, 4);
+
+        Sprite = eatenGhostSprite;
     }
     
     public void ToScatterMode()

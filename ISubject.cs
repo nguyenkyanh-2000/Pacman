@@ -4,7 +4,7 @@ public interface ISubject
 {
     void AttachObserver(IObserver observer);
     void DetachObserver(IObserver observer);
-    void NotifyObserversThatPelletEaten();
-    void NotifyObserversThatEnergizedPelletEaten();
-    void NotifyObserversThatGhostCollided();
+    void NotifyObserversThatPelletEaten(Pellet pellet);
+    void NotifyObserversThatPowerPelletEaten(PowerPellet powerPellet);
+    void NotifyObserversThatGhostCollided(Ghost ghost);
 }

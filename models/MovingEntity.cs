@@ -20,7 +20,7 @@ public abstract class MovingEntity: Entity
         Velocity = velocity;
     }
     
-    public void Move()
+    public virtual void Move()
     {
       if (Velocity.Length() == 0) return;
       this.X += (int) Velocity.X;

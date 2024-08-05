@@ -2,7 +2,7 @@ using SplashKitSDK;
 
 namespace Pacman;
 
-public class PowerPellet: StaticEntity
+public class PowerPellet: Pellet
 {
     public PowerPellet(int x, int y, int size) : base(x, y, size)
     {

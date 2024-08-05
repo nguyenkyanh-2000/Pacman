@@ -16,8 +16,6 @@ public abstract class GhostState
     public virtual void TimerModeOver(){}
     public virtual void TimerFrightenedOver(){}
     public virtual void Eaten(){}
-    public virtual void OutsideHouse(){}
-    public virtual void InsideHouse(){}
     
     public virtual Point GetTargetPosition()
     {
@@ -60,6 +58,7 @@ public abstract class GhostState
 
         int minDistance = int.MaxValue;
         
+        
         possibleDirections.ForEach((direction) =>
         {
             // Check if a possible direction will hit a wall in the future
@@ -82,6 +81,13 @@ public abstract class GhostState
                 nextVelocity = tempVelocity;
             }
         });
+
+        
+        // If the ghost has no possible directions to move, it will move in the opposite direction
+        if (minDistance == int.MaxValue)
+        {
+            nextVelocity = oppositeDirection * ProgramConfig.GhostSpeed;   
+        }
         
         Ghost.Velocity = nextVelocity;
     }

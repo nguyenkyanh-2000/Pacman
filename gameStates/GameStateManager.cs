@@ -2,37 +2,29 @@ namespace Pacman;
 
 public class GameStateManager
 {
-    private static GameStateManager? _instance;
     private Stack<GameState> _gameStates;
 
     private GameState MenuGameState;
     private GameState PlayGameState;
     private GameState PauseGameState;
     private GameState GameOverState;
+    private GameState VictoryGameState;
 
     public const int MENU = 0;
     public const int PLAYGAME = 1;
     public const int PAUSE = 2;
     public const int GAMEOVER = 3;
+    public const int VICTORY = 4;
     
     
-    private GameStateManager()
+    public GameStateManager()
     {
         _gameStates = new Stack<GameState>();
         MenuGameState = new MenuGameState(this);
         PlayGameState = new PlayGameState(this);
         PauseGameState = new PauseGameState(this);
         GameOverState = new GameOverState(this);
-        PushState(MenuGameState);
-    }
-    
-    public static GameStateManager Instance()
-    {
-        if (_instance == null)
-        {
-            _instance = new GameStateManager();
-        }
-        return _instance;
+        VictoryGameState = new VictoryGameState(this);
     }
 
     public GameState GetState(int state)
@@ -47,6 +39,8 @@ public class GameStateManager
                 return PauseGameState;
             case GAMEOVER:
                 return GameOverState;
+            case VICTORY:
+                return VictoryGameState;
             default:
                 return MenuGameState;
         }
@@ -95,6 +89,9 @@ public class GameStateManager
                 break;
             case GAMEOVER:
                 PushState(GameOverState);
+                break;
+            case VICTORY:
+                PushState(VictoryGameState);
                 break;
         }
     }

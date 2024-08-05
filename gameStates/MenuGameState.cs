@@ -40,6 +40,7 @@ public class MenuGameState : GameState
             GameStateManager.ChangeStateInto(GameStateManager.PLAYGAME);
         }
         
+        
         if (SplashKit.KeyTyped(KeyCode.EscapeKey))
         {
             Environment.Exit(0);

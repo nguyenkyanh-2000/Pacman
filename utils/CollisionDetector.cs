@@ -15,8 +15,9 @@ public class CollisionDetector
     /**
      *  Check if the entity collided with any other entity in the game
      */
-    public Entity? CollidedWith(MovingEntity entity)
+    public List<Entity> CollidedWith(MovingEntity entity)
     {
+        List<Entity> collidedEntities = [];
         RectangleF entityFutureCollisionBox = entity.GetSweptBroadPhaseBox();
         foreach (Entity other in _playGameState.Entities)
         {
@@ -24,11 +25,10 @@ public class CollisionDetector
             
             if (entityFutureCollisionBox.IntersectsWith(other.CollisionBox()))
             {
-                return other;
+               collidedEntities.Add(other);
             }
         }
-
-        return null;
+        return collidedEntities;
     }
     public Wall? CollideWithWall(MovingEntity entity)
     {

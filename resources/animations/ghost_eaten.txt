@@ -1,0 +1,13 @@
+SplashKit Animation
+
+//f: identifier, cell number, duration, next frame
+f:0,0,1,
+f:1,1,1,
+f:2,2,1,
+f:3,3,1,
+
+//identifiers
+i:EatenGhostRight,0
+i:EatenGhostLeft,1
+i:EatenGhostUp,2
+i:EatenGhostDown,3

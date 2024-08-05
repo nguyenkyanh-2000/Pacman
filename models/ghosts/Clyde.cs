@@ -12,7 +12,7 @@ public class Clyde: Ghost
     
     public Clyde(int x, int y, int size, Vector2 velocity, Sprite sprite) : base(x, y, size, velocity, ClydeSprite)
     {
-        ClydeBitmap.SetCellDetails(ClydeSprite.Width/8, ClydeSprite.Height, 8, 1, 8 );
+        ClydeBitmap.SetCellDetails(ProgramConfig.MapCellSize, ProgramConfig.MapCellSize, 8, 1, 8 );
         Strategy = new ClydeStrategy();
     }
 }
