@@ -7,7 +7,8 @@ namespace Pacman
         {
 
             Window window = new Window("Pacman", ProgramConfig.ScreenWidth, ProgramConfig.ScreenHeight);
-            SplashKit.LoadFont(ProgramConfig.GameFont, "PressStart2P-Regular.ttf");
+            SplashKit.LoadFont(ProgramConfig.GameFont, Utils.BuildPath("resources/fonts/PressStart2P-Regular.ttf"));
+            SplashKit.SetResourcesPath(Utils.BuildPath("resources"));
             Game game = Game.Instance;
 
             do

@@ -6,7 +6,7 @@ namespace Pacman;
 public class Pacman: MovingEntity, ISubject
 {
     // Loading the Sprite for Pacman
-    private static readonly Bitmap PacmanBitmap = SplashKit.LoadBitmap("Pacman", "pacman.png");
+    private static readonly Bitmap PacmanBitmap = SplashKit.LoadBitmap("Pacman", Utils.BuildPath("resources/images/pacman.png"));
     private static readonly AnimationScript PacmanMovingScript = new AnimationScript("PacmanMovingScript", "pacman.txt");
     private static readonly Sprite PacmanSprite = new Sprite("PacmanSprite", PacmanBitmap, PacmanMovingScript);
     

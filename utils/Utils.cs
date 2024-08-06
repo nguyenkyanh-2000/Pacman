@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace Pacman;
 
-public  class Utils
+public class Utils
 {
     public static int DistanceBetween(Point a, Point b)
     {
@@ -12,5 +12,11 @@ public  class Utils
     public static int ManhattanDistanceBetween(Point a, Point b)
     {
         return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y);
+    }
+    
+    public static string BuildPath(string path)
+    {
+        string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        return Path.Combine(currentDirectory, path);
     }
 }

@@ -5,7 +5,7 @@ namespace Pacman;
 
 public class Blinky: Ghost
 {
-    private static readonly Bitmap BlinkyBitmap = SplashKit.LoadBitmap("Blinky", "blinky.png");
+    private static readonly Bitmap BlinkyBitmap = SplashKit.LoadBitmap("Blinky", Utils.BuildPath("resources/images/blinky.png"));
     private static readonly AnimationScript BlinkyMovingScript = new AnimationScript("BlinkyMovingScript", "ghost.txt");
     public static readonly Sprite BlinkySprite = new Sprite("BlinkySprite", BlinkyBitmap, BlinkyMovingScript);
    

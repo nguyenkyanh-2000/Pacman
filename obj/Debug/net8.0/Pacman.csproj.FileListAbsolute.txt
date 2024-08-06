@@ -19,3 +19,16 @@
 /Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/Microsoft.Extensions.Configuration.dll
 /Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/Microsoft.Extensions.Configuration.Abstractions.dll
 /Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/animations/ghost.txt
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/animations/ghost_eaten.txt
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/animations/ghost_frightened.txt
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/animations/pacman.txt
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/fonts/PressStart2P-Regular.ttf
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/blinky.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/clyde.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/ghost_eaten.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/ghost_frightened.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/inky.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/pacman.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/images/pinky.png
+/Users/coderschool/RiderProjects/COS20007/Pacman/bin/Debug/net8.0/resources/levels/level.txt

@@ -5,7 +5,7 @@ namespace Pacman;
 
 public class Clyde: Ghost
 {
-    private static readonly Bitmap ClydeBitmap = SplashKit.LoadBitmap("Clyde", "clyde.png");
+    private static readonly Bitmap ClydeBitmap = SplashKit.LoadBitmap("Clyde", Utils.BuildPath("resources/images/clyde.png"));
     private static readonly AnimationScript ClydeMovingScript = new AnimationScript("ClydeMovingScript", "ghost.txt");
     public static readonly Sprite ClydeSprite = new Sprite("ClydeSprite", ClydeBitmap, ClydeMovingScript);
    

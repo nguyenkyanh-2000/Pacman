@@ -1,13 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "rOAE4mGlWZrZ/x+BMa0+bIoPlShDm8fdr1zxrL/heVpEki4heWxKG/Z9BfC1qoC45rVXbvnsu9BiyQeGZVo8Xw==",
+  "dgSpecHash": "usFKbINtic4=",
   "success": true,
   "projectFilePath": "/Users/coderschool/RiderProjects/COS20007/Pacman/Pacman.csproj",
   "expectedPackageFiles": [
     "/Users/coderschool/.nuget/packages/microsoft.extensions.configuration/9.0.0-preview.5.24306.7/microsoft.extensions.configuration.9.0.0-preview.5.24306.7.nupkg.sha512",
     "/Users/coderschool/.nuget/packages/microsoft.extensions.configuration.abstractions/9.0.0-preview.5.24306.7/microsoft.extensions.configuration.abstractions.9.0.0-preview.5.24306.7.nupkg.sha512",
     "/Users/coderschool/.nuget/packages/microsoft.extensions.primitives/9.0.0-preview.5.24306.7/microsoft.extensions.primitives.9.0.0-preview.5.24306.7.nupkg.sha512",
-    "/Users/coderschool/.nuget/packages/splashkit/1.1.6/splashkit.1.1.6.nupkg.sha512"
+    "/Users/coderschool/.nuget/packages/microsoft.net.illink.tasks/8.0.6/microsoft.net.illink.tasks.8.0.6.nupkg.sha512",
+    "/Users/coderschool/.nuget/packages/splashkit/1.1.6/splashkit.1.1.6.nupkg.sha512",
+    "/Users/coderschool/.nuget/packages/microsoft.netcore.app.runtime.osx-arm64/8.0.6/microsoft.netcore.app.runtime.osx-arm64.8.0.6.nupkg.sha512",
+    "/Users/coderschool/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-arm64/8.0.6/microsoft.aspnetcore.app.runtime.osx-arm64.8.0.6.nupkg.sha512",
+    "/Users/coderschool/.nuget/packages/microsoft.netcore.app.crossgen2.osx-arm64/8.0.6/microsoft.netcore.app.crossgen2.osx-arm64.8.0.6.nupkg.sha512"
   ],
   "logs": []
 }

@@ -5,7 +5,7 @@ namespace Pacman;
 
 public class Inky: Ghost
 {
-    private static readonly Bitmap InkyBitmap = SplashKit.LoadBitmap("Inky", "inky.png");
+    private static readonly Bitmap InkyBitmap = SplashKit.LoadBitmap("Inky", Utils.BuildPath("resources/images/inky.png"));
     private static readonly AnimationScript InkyMovingScript = new AnimationScript("InkyMovingScript", "ghost.txt");
     public static readonly Sprite InkySprite = new Sprite("InkySprite", InkyBitmap, InkyMovingScript);
    

@@ -22,8 +22,9 @@ public class PlayGameState : GameState, IObserver
     public PlayGameState(GameStateManager gameStateManager): base(gameStateManager)
     {
         
+        
         // Reading the map from a file
-        List<String> lines = File.ReadAllLines("resources/levels/level.txt").ToList();
+        List<String> lines = File.ReadAllLines(Utils.BuildPath("resources/levels/level.txt")).ToList();
         
         // Creating the entities
         GhostFactory ghostFactory;

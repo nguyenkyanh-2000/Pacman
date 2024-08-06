@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
+        <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -13,8 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="resources\fonts\" />
-      <Folder Include="resources\images\" />
+            <None Update="resources\**\*">
+                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            </None>
     </ItemGroup>
 
 </Project>
